@@ -25,8 +25,6 @@ see https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/Getting-Sta
 Kaltura strongly encourages the [use of appTokens for authenticating to the API.](https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/application-tokens.html)
 
 # Basic Workflow
-![Vendor REACH Flow](https://user-images.githubusercontent.com/17254753/219496027-82a11fd9-6f27-418c-a2f0-ee31df28dc63.png)
-
 ![Sequence diagram outlining the Vendor to Kaltura API interaction flow](samples/Vendor-REACH-Flow.png)
 
 # Workflow Details
