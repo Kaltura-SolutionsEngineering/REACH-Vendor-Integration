@@ -27,7 +27,7 @@ Kaltura strongly encourages the [use of appTokens for authenticating to the API.
 # Basic Workflow
 ![Vendor REACH Flow](https://user-images.githubusercontent.com/17254753/219496027-82a11fd9-6f27-418c-a2f0-ee31df28dc63.png)
 
-![Sequence diagram outlining the Vendor to Kaltura API interaction flow](Vendor REACH Flow.png)
+![Sequence diagram outlining the Vendor to Kaltura API interaction flow](samples/Vendor-REACH-Flow.png)
 
 # Workflow Details
 The general flow implemented by a vendor would follow this outline:
