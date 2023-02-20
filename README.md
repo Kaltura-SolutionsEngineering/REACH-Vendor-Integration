@@ -27,7 +27,7 @@ Kaltura strongly encourages the [use of appTokens for authenticating to the API.
 # Basic Workflow
 ![Vendor REACH Flow](https://user-images.githubusercontent.com/17254753/219496027-82a11fd9-6f27-418c-a2f0-ee31df28dc63.png)
 
-![Sequence diagram outlining the Vendor to Kaltura API interaction flow](/Vendor REACH Flow.png)
+![Sequence diagram outlining the Vendor to Kaltura API interaction flow](Vendor REACH Flow.png)
 
 # Workflow Details
 The general flow implemented by a vendor would follow this outline:
@@ -43,7 +43,7 @@ The general flow implemented by a vendor would follow this outline:
 ## Notes for flow steps
 1. Connect to the Kaltura API using your Vendor account.  The Kaltura Partners team can provide you with this account and the relevant details.  We strongly suggest provisioning an appToken for this account and using that to spawn your API sessions. See [Getting started with application tokens](https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/application-tokens.html) for more information on appToken sessions.  Also, you can find [pre-compiled Kaltura API client libraries in a number of languages](https://developer.kaltura.com/api-docs/Client_Libraries) to help you get started.
    - The client lib exposes the ability to define a Client Tag for each API request. This property is used later by Kaltura to track which application issued which call. With REACH we make another use of this field. To ensure Kaltura has a way to determine the Task processing E2E, the vendor should follow the following standards:
-     - For non task-specific API calls, the client tag should be set to be '<default clientTag>_vendorName-vendorPartnerId”. (default clientTag consists of the client library programming language and the library build date) . Example: 'php5:18-11-11_vendorName_12345'
+     - For non task-specific API calls, the client tag should be set to be '<default clientTag>_vendorName-vendorPartnerId'. (default clientTag consists of the client library programming language and the library build date) . Example: 'php5:18-11-11_vendorName_12345'
      - For task-specific API calls, the Task ID should also be added to the clientTag: Example, for PHP5 client library, Task ID (9292) and vendor account id (12345), the resulting client tag should be "php5:18-11-11_vendorName-12345-9292"
    - The appToken should be set with 'disableentitlement' privilege.  The default expiry is 24 hours, but can be set as desired.
 2. Once you have a valid client session established, make a call to [entryVendorTask.getJobs()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/getJobs).  This will return a list of requested jobs for your Vendor account.  Make sure to use the following parameters in your request:
@@ -66,7 +66,27 @@ The general flow implemented by a vendor would follow this outline:
 5. Once you have the media and begin to process the task, you'll need to update the task status.  To do so, call the [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob) endpoint.  For normal scenarios, you'll update the job with the following:
    - status = PROCESSING
    - ks - make sure the set your KS back to your vendor KS that was generated with your vendor appToken when your polling process began.
-6. Upon completion of processing the request on the vendor side, you'll need to update the entry in Kaltura with the relevant generated assets (caption, transcript, chapters, audio description track, etc).
+6. Upon completion of processing the request on the vendor side, you'll need to update the entry in Kaltura with the relevant generated assets (caption, transcript, chapters, audio description track, etc).  Depending on the service requested and the generated output, you may need to use any of the following:
+   - [attachmentAsset.add()](https://developer.kaltura.com/api-docs/service/attachmentAsset/action/add) - for adding transcripts, or other attachments
+   - [captionAsset.add()](https://developer.kaltura.com/api-docs/service/captionAsset/action/add) - for adding caption files
+   - [cuePoint.add()](https://developer.kaltura.com/api-docs/service/cuePoint/action/add) - for adding cue points, like chapters
+   - [flavorAsset.add()](https://developer.kaltura.com/api-docs/service/flavorAsset/action/add) - for adding additional flavors, like an audio description track
+   - [baseEntry.update()](https://developer.kaltura.com/api-docs/service/baseEntry/action/update) - for updating basic metadata, like tags, titles, descriptions, etc.  When using baseEntry.update(), you'd first need to call [baseEntry.get()](https://developer.kaltura.com/api-docs/service/baseEntry/action/get) to return any existing metadata before merging/amending with any additional data.
+   - For all calls, be sure to use the accessKey (ks), partnerId, and entryId that were specified in the original task object.  In addition, some object types may need reference to other objects (like captionAsset has a parameter for reference to the transcript (attachmentAsset), so be sure to supply those where needed.  If you have additional questions, feel free to ask the Kaltura Partners team for added guidance.
+7. After adding the requested assets to the entry, update the job status again using [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob).
+   - be sure to reset the ks back to your vendor ks.
+   - on success, set the 'status' to 'READY', and the outputObjectId to the id  returned for the asset you created (if multiple, just use the first or most prominent)
+   - for any kind of error encountered, set the 'status' to 'ERROR', and use the 'errDescription' field to provide more details on the error.
+   - use the 'externalTaskId' parameter to store any relevant task processing identifiers in your system.  This will help if we ever need to track a task back to you to troubleshoot or provide additional information.
+ 
+# Additional Information
+   - Kaltura operates a global SaaS, regional cloud, and on-prem instances.  You will need a service/process to run against each of these environments you wish to support.
+   - If the accessKey provided in the original task object expires, you may utilize [entryVendorTask.extendAccessKey()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/extendAccessKey) to generate a new accessKey (ks) for the task.
+   - Tasks will include a deletion policy specifying how long a vendor should be allowed to maintain a copy of the media asset after processing before purging the asset.
+   - Tasks will also include a specified processing region, in the event the vendor supports processing content in multiple regions (ex: to support GDPR, etc).
+   - Job prioritization - the vendor should have a queueing mechanism that gives equal priority to all jobs, regardless of the customer that initiated the request.
+   - Kaltura and the Partner/Vendor will both perform joint QA on any REACH integration before it moves to Production.
+   - See [samples](samples) for more help. 
    
    
 
