@@ -1,0 +1,16 @@
+# SaaS and Regional Cloud API Service URL's
+- Global SaaS: https://api.kaltura.com
+- AP (Asia Pacific - Sydney) Region: https://api.ap.kaltura.com
+- CA (Canada - Central) Region: https://api.ca.kaltura.com
+- DE (Europe - Frankfurt) Region: https://api.de.kaltura.com
+- EU (Europe - Ireland) Region: https://api.eu.kaltura.com
+- SG (Asia Pacific - Singapore) Region: https://api.sg.kaltura.com
+
+# Service Monitoring
+- If you'd like to monitor the status of Kaltura services, see the following:
+  - [Global SaaS Status Page](https://status.kaltura.com)
+  - [Asia Pacific - Syndney Region Status Page](https://status.ap.kaltura.com)
+  - [Canada Region Status Page](https://status.ca.kaltura.com)
+  - [Europe -Frankfurt Region Status Page](https://status.de.kaltura.com)
+  - [Europe - Ireland Region Status Page](https://status.eu.kaltura.com)
+  - [Asia Pacific - Singapore Status Page](https://status.sg.kaltura.com)
