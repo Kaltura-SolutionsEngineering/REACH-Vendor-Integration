@@ -25,7 +25,7 @@ see https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/Getting-Sta
 Kaltura strongly encourages the [use of appTokens for authenticating to the API.](https://developer.kaltura.com/api-docs/VPaaS-API-Getting-Started/application-tokens.html)
 
 # Basic Workflow
-![Sequence diagram outlining the Vendor to Kaltura API interaction flow](samples/Vendor-REACH-Flow.png)
+![Sequence diagram outlining the Vendor to Kaltura API interaction flow](resources/Vendor-REACH-Flow.png)
 
 # Workflow Description
 The general flow implemented by a vendor would follow this outline:
@@ -83,7 +83,7 @@ The general flow implemented by a vendor would follow this outline:
    - Tasks will also include a specified processing region, in the event the vendor supports processing content in multiple regions (ex: to support GDPR, etc).
    - Job prioritization - the vendor should have a queueing mechanism that gives equal priority to all jobs, regardless of the customer that initiated the request.
    - Kaltura and the Partner/Vendor will both perform joint QA on any REACH integration before it moves to Production.
-   - See [samples](samples) for more help. 
+   - See [resources](resources) for more help. 
    
    
 
