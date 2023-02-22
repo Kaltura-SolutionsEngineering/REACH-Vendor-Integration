@@ -1,5 +1,5 @@
 # SaaS and Regional Cloud API Service URL's
-- Global SaaS: api.kaltura.com
+- Global SaaS: www.kaltura.com
 - AP (Asia Pacific - Sydney) Region: api.ap.kaltura.com
 - CA (Canada - Central) Region: api.ca.kaltura.com
 - DE (Europe - Frankfurt) Region: api.de.kaltura.com
