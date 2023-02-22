@@ -77,7 +77,7 @@ The general flow implemented by a vendor would follow this outline:
    - use the 'externalTaskId' parameter to store any relevant task processing identifiers in your system.  This will help if we ever need to track a task back to you to troubleshoot or provide additional information.
  
 # Additional Information
-   - Kaltura operates a global SaaS, regional cloud, and on-prem instances.  You will need a service/process to run against each of these environments you wish to support.
+   - Kaltura operates a global SaaS, regional cloud, and on-prem instances.  You will need a service/process to run against each of these environments you wish to support.  For more information, see [API Endpoints](resources/API_Endpoints.md)
    - If the accessKey provided in the original task object expires, you may utilize [entryVendorTask.extendAccessKey()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/extendAccessKey) to generate a new accessKey (ks) for the task.
    - Tasks will include a deletion policy specifying how long a vendor should be allowed to maintain a copy of the media asset after processing before purging the asset.
    - Tasks will also include a specified processing region, in the event the vendor supports processing content in multiple regions (ex: to support GDPR, etc).
