@@ -56,7 +56,7 @@ The general flow implemented by a vendor would follow this outline:
      - ks - ensure that the KS matches the accessKey from the original task request.
      - entryId - this id will have been supplied in the original task request.
      - contextDataParams->objectType = KalturaPlaybackContextOptions
-     - contextDataParams->streamerType = "HTTP" if you want the downloadable file, or "appleHttps" if you want HLS manifest(s).
+     - contextDataParams->streamerType = "http" if you want the downloadable file, or "applehttp" if you want HLS manifest(s).
      - contextDataParams->ks = the ks, or accessKey, from the original task object
    - Based on the response from the above call, you should have the needed information to get the needed media.  See [information on the playManifest API](https://developer.kaltura.com/api-docs/Deliver-and-Distribute-Media/playManifest-streaming-api.html) for details on constructing stream or download urls for the media. Be sure to include the customer partnerId and ks (accessKey) that were provided in the original request task object.
      - if you wish to ultilize HLS and only retrieve the audio track, or just the video track, see [url path parameters](https://github.com/kaltura/nginx-vod-module#url-path-parameters) for details.
