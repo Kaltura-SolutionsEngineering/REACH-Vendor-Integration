@@ -63,12 +63,8 @@ The general flow implemented by a vendor would follow this outline:
 5. Once you have the media and begin to process the task, you'll need to update the task status.  To do so, call the [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob) endpoint.  For normal scenarios, you'll update the job with the following:
    - status = PROCESSING
    - ks - make sure the set your KS back to your vendor KS that was generated with your vendor appToken when your polling process began.
-6. Upon completion of processing the request on the vendor side, you'll need to update the entry in Kaltura with the relevant generated assets (caption, transcript, chapters, audio description track, etc).  Depending on the service requested and the generated output, you may need to use any of the following:
-   - [attachmentAsset.add()](https://developer.kaltura.com/api-docs/service/attachmentAsset/action/add) - for adding transcripts, or other attachments
-   - [captionAsset.add()](https://developer.kaltura.com/api-docs/service/captionAsset/action/add) - for adding caption files
-   - [cuePoint.add()](https://developer.kaltura.com/api-docs/service/cuePoint/action/add) - for adding cue points, like chapters
-   - [flavorAsset.add()](https://developer.kaltura.com/api-docs/service/flavorAsset/action/add) - for adding additional flavors, like an audio description track
-   - [baseEntry.update()](https://developer.kaltura.com/api-docs/service/baseEntry/action/update) - for updating basic metadata, like tags, titles, descriptions, etc.  When using baseEntry.update(), you'd first need to call [baseEntry.get()](https://developer.kaltura.com/api-docs/service/baseEntry/action/get) to return any existing metadata before merging/amending with any additional data.
+6. Upon completion of processing the request on the vendor side, you'll need to update the entry in Kaltura with the relevant generated assets (caption, transcript, chapters, audio description track, etc).  Depending on the service requested and the generated output, you may need to use additional methods to create things like captions, transcripts, chapters, additional audio tracks, etc:
+   - see [Creating Assets](resources/Creating_Assets.md) for more information.
    - For all calls, be sure to use the accessKey (ks), partnerId, and entryId that were specified in the original task object.  In addition, some object types may need reference to other objects (like captionAsset has a parameter for reference to the transcript (attachmentAsset), so be sure to supply those where needed.  If you have additional questions, feel free to ask the Kaltura Partners team for added guidance.
 7. After adding the requested assets to the entry, update the job status again using [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob).
    - be sure to reset the ks back to your vendor ks.
