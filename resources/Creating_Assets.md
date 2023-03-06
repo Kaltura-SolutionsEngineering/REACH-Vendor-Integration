@@ -32,7 +32,7 @@ Depending on the REACH request job you are servicing, there would have been addi
 
 ## Creating Caption Assets
 1. Create a captionAsset with the [captionAsset.add() service](https://developer.kaltura.com/api-docs/service/captionAsset/action/add).  You will specify the entryId that you are creating this caption for, and populate the relevant attributes.  This is the shell data for your caption.
-- make sure to set the associatedTranscriptIds field with the id of the transcript that you created.
+   - make sure to set the associatedTranscriptIds field with the id of the transcript that you created.
 2. Next, you'll attach the actual caption file to the shell you just created.  Using the [captionAsset.setContent() method](https://developer.kaltura.com/api-docs/service/captionAsset/action/setContent), you will reference the id of the captionAsset you created in step 1, then set the appropiate contentResource object type.
    - For uploaded assets (see "Uploading via the uploadToken method" above), you'll choose the KalturaUploadedFileTokenResource type, then reference the uploadToken for your file in the 'token' field.
    - For files that are publicly available in your platform, you'd choose the KalturaUrlResource type, and supply the url to the resource (along with any needed urlHeaders).
