@@ -44,6 +44,20 @@ Depending on the REACH request job you are servicing, there would have been addi
 1. To create chapters for a piece of media, use the [cuePoint.add() service](https://developer.kaltura.com/api-docs/service/cuePoint/action/add) for each chapter.  Reference the media the chapters should be associated to using the entryId field.  Use the cuePoint object type of KalturaThumbCuePoint and the subType of CHAPTER, then populate the relevant fields, such as title, description, tags, and startTime.
 
 ## Creating Additional Audio Tracks
+- more details to come
+
+## Adding Advance Audio Description caption files
+Advanced audio description consists of a specially formatted .VTT file that holds the traditional captions, as well as notations for audio descriptive sections.  During media playback, the Kaltura player will pause playback at the notated descriptive sections, play out the descriptive audio, then resume playback of the media.
+- more details to come
+
+## Adding Intelligent Tagging
+Different vendors could handle Intelligent Tagging in different ways, but a common use case would be to alter the tags, description, and possibly name of a media asset.  To achieve this, you would:
+1. Call the [baseEntry.get() service](https://developer.kaltura.com/api-docs/service/baseEntry/action/get) with the requested media entryId to retrieve the baseEntry object.
+2. Append any generated tags to the baseEntry.tags field.
+3. Append/replace any generated description/summary to the baseEntry.description field. 
+4. Append/replace any generated title to the baseEntry.name field.
+5. Finally, call the [baseEntry.update() service](https://developer.kaltura.com/api-docs/service/baseEntry/action/update) and supply the amended fields to update the asset.
+
 
 
 
