@@ -43,8 +43,12 @@ Depending on the REACH request job you are servicing, there would have been addi
 ## Creating Chapters
 1. To create chapters for a piece of media, use the [cuePoint.add() service](https://developer.kaltura.com/api-docs/service/cuePoint/action/add) for each chapter.  Reference the media the chapters should be associated to using the entryId field.  Use the cuePoint object type of KalturaThumbCuePoint and the subType of CHAPTER, then populate the relevant fields, such as title, description, tags, and startTime.
 
-## Creating Additional Audio Tracks
-- more details to come
+## Creating Additional Audio Tracks (Dubbing and Audio Description services)
+For Dubbing and Audio Description services, there is a need to create new added audio tracks.  To do so:
+1. In the REACH job, there should have been an indication of the appropriate FlavorParamId to be used for the new audio track.  Using that, call the [flavorAsset.add() service](https://developer.kaltura.com/api-docs/service/flavorAsset/action/add) and provide the entryId from the job request, the flavorParamsId from the job request, and other relevant fields.  This will create the new flavorAsset shell.
+2. Next, you'll attach the actual flavor file to the shell you just created.  Using the [flavorAsset.setContent() method](https://developer.kaltura.com/api-docs/service/flavorAsset/action/setContent), you will reference the id of the flavorAsset you created in step 1, then set the appropiate contentResource object type.
+   - For uploaded assets (see "Uploading via the uploadToken method" above), you'll choose the KalturaUploadedFileTokenResource type, then reference the uploadToken for your file in the 'token' field.
+   - For files that are publicly available in your platform, you'd choose the KalturaUrlResource type, and supply the url to the resource (along with any needed urlHeaders). 
 
 ## Adding Advance Audio Description caption files
 Advanced audio description consists of a specially formatted .VTT file that holds the traditional captions, as well as notations for audio descriptive sections.  During media playback, the Kaltura player will pause playback at the notated descriptive sections, play out the descriptive audio, then resume playback of the media.
