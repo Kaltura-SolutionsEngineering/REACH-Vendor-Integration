@@ -50,9 +50,12 @@ For Dubbing and Audio Description services, there is a need to create new added 
    - For uploaded assets (see "Uploading via the uploadToken method" above), you'll choose the KalturaUploadedFileTokenResource type, then reference the uploadToken for your file in the 'token' field.
    - For files that are publicly available in your platform, you'd choose the KalturaUrlResource type, and supply the url to the resource (along with any needed urlHeaders). 
 
-## Adding Advance Audio Description caption files
-Advanced audio description consists of a specially formatted .VTT file that holds the traditional captions, as well as notations for audio descriptive sections.  During media playback, the Kaltura player will pause playback at the notated descriptive sections, play out the descriptive audio, then resume playback of the media.
-- more details to come
+## Adding Advanced/Extended Audio Description files
+Advanced/Extended audio description consists of a .VTT file that holds the extended audio captions.  During media playback, the Kaltura player will pause playback at the notated descriptive sections, play out the descriptive audio, then resume playback of the media.
+1. Create an attachmentAsset with the [attachmentAsset.add() service](https://developer.kaltura.com/api-docs/service/attachmentAsset/action/add).  You will specify the entryId that you are creating this attachment for, use the KalturaTranscriptAsset attachmentAsset object type, and populate the relevant attributes.  This is the shell data for your transcript.  ***NOTE: be sure when adding the attachment to set the 'tags' attribute value to 'AAD'.  This will be used to notify the Kaltur player that this attachment represents the Advanced Audio Description .VTT file***
+2. Next, you'll attach the actual transcript file to the shell you just created.  Using the [attachmentAsset.setContent() method](https://developer.kaltura.com/api-docs/service/attachmentAsset/action/setContent), you will reference the id of the attachmentAsset you created in step 1, then set the appropiate contentResource object type.
+   - For uploaded assets (see "Uploading via the uploadToken method" above), you'll choose the KalturaUploadedFileTokenResource type, then reference the uploadToken for your file in the 'token' field.
+   - For files that are publicly available in your platform, you'd choose the KalturaUrlResource type, and supply the url to the resource (along with any needed urlHeaders).
 
 ## Adding Intelligent Tagging
 Different vendors could handle Intelligent Tagging in different ways, but a common use case would be to alter the tags, description, and possibly name of a media asset.  To achieve this, you would:
