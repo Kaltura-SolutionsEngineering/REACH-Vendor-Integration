@@ -51,17 +51,22 @@ The general flow implemented by a vendor would follow this outline:
    - id - this is the task id and will have been included in the task object from the entryVendorTask.getJobs() call.
    - ks - this is a global parameter in the API client.  For this call, you'll need to change your client KS (Kaltura Session) to match the accessKey returned in the task object.  This KS is associated to the specific customer account and media related to the originating task request.  This value will change with each task you are looping through, so be sure to set it accordingly for each task.
    - responseProfile - this is also a global parameter in the API client.  The object type should be ResponseProfileHolder, and you should set the systemName attribute value to 'reach_vendor'.  This tells the API to return additional information related to the Customer's REACH profile such as dictionaries, processing region, caption display settings, and other pertinent details.  This will UNSET after each API call, so it will need to be reset for each subsequent call, much like the KS.
-4. Once you have the task details, you'll need to get the media for the specified request.  You'll have the option to download the needed flavor (transcoded rendition), or obtain an HLS manifest to allow you to stream the file (audio, video, or both) and concatenate the segments on your end to rebuild them into a file.  To do so, maintain the specific KS for the task, and make a call to [baseEntry.getPlaybackContext()](https://developer.kaltura.com/api-docs/service/baseEntry/action/getPlaybackContext). 
-   - Supply the following parameters:
-     - ks - ensure that the KS matches the accessKey from the original task request.
-     - entryId - this id will have been supplied in the original task request.
-     - contextDataParams->objectType = KalturaPlaybackContextOptions
-     - contextDataParams->streamerType = "http" if you want the downloadable file, or "applehttp" if you want HLS manifest(s).
-     - contextDataParams->ks = the ks, or accessKey, from the original task object
-   - Based on the response from the above call, you should have the needed information to get the needed media.  See [information on the playManifest API](https://developer.kaltura.com/api-docs/Deliver-and-Distribute-Media/playManifest-streaming-api.html) for details on constructing stream or download urls for the media. Be sure to include the customer partnerId and ks (accessKey) that were provided in the original request task object.
-     - if you wish to ultilize HLS and only retrieve the audio track, or just the video track, see [url path parameters](https://github.com/kaltura/nginx-vod-module#url-path-parameters) for details.
-5. Once you have the media and begin to process the task, you'll need to update the task status.  To do so, call the [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob) endpoint.  For normal scenarios, you'll update the job with the following:
-   - status = PROCESSING
+4. Depending on if the job request is for VOD or Live assets, then our next step will vary.
+   4a. For VOD, once you have the task details, you'll need to get the media for the specified request.  You'll have the option to download the needed flavor (transcoded rendition), or obtain an HLS manifest to allow you to stream the file (audio, video, or both) and concatenate the segments on your end to rebuild them into a file.  To do so, maintain the specific KS for the task, and make a call to [baseEntry.getPlaybackContext()](https://developer.kaltura.com/api-docs/service/baseEntry/action/getPlaybackContext). 
+       - Supply the following parameters:
+         - ks - ensure that the KS matches the accessKey from the original task request.
+         - entryId - this id will have been supplied in the original task request.
+         - contextDataParams->objectType = KalturaPlaybackContextOptions
+         - contextDataParams->streamerType = "http" if you want the downloadable file, or "applehttp" if you want HLS manifest(s).
+         - contextDataParams->ks = the ks, or accessKey, from the original task object
+       - Based on the response from the above call, you should have the needed information to get the needed media.  See [information on the playManifest API](https://developer.kaltura.com/api-docs/Deliver-and-Distribute-Media/playManifest-streaming-api.html) for details on constructing stream or download urls for the media. Be sure to include the customer partnerId and ks (accessKey) that were provided in the original request task object.
+         - if you wish to ultilize HLS and only retrieve the audio track, or just the video track, see [url path parameters](https://github.com/kaltura/nginx-vod-module#url-path-parameters) for details.
+   4b. For live, you should have a 'scheduleEventId' that comes in the entryVendorTask details, along with the scheduled start and end times for the live event.  After provisioning your services for the live session, you should call [scheduleEvent.updateLiveFeature()](https://developer.kaltura.com/api-docs/service/scheduleEvent/action/updateLiveFeature) to provide the following data back to Kaltura:
+       - mediaUrl and mediaKey - an RTMP(S) stream ingest url and key where Kaltura should relay the live stream to you.
+       - captionUrl and captionToken - a websocket address and token where Kaltura should connect at the scheduled event time to receive caption data from you over a realtime websocket.
+       - see [Creating Assets](resources/Creating_Assets.md) for more information.
+5. Once you have the media or stream and begin to process the task, you'll need to update the task status.  To do so, call the [entryVendorTask.updateJob()](https://developer.kaltura.com/api-docs/service/entryVendorTask/action/updateJob) endpoint.  For normal scenarios, you'll update the job with the following:
+   - status = PROCESSING .  For live jobs that will be executed at a future scheduled date, set the status = SCHEDULED upon provisioning the job, then update the task again to status = PROCESSING when you begin to process the task.
    - ks - make sure the set your KS back to your vendor KS that was generated with your vendor appToken when your polling process began.
 6. Upon completion of processing the request on the vendor side, you'll need to update the entry in Kaltura with the relevant generated assets (caption, transcript, chapters, audio description track, etc).  Depending on the service requested and the generated output, you may need to use additional methods to create things like captions, transcripts, chapters, additional audio tracks, etc:
    - see [Creating Assets](resources/Creating_Assets.md) for more information.

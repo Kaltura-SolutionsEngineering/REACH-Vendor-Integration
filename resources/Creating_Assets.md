@@ -65,6 +65,18 @@ Different vendors could handle Intelligent Tagging in different ways, but a comm
 4. Append/replace any generated title to the baseEntry.name field.
 5. Finally, call the [baseEntry.update() service](https://developer.kaltura.com/api-docs/service/baseEntry/action/update) and supply the amended fields to update the asset.
 
+## Adding Live Captions
+Live caption services are implemented as Kaltura relaying an RTMP(S) stream to the vendor, then pulling caption data back over a websocket connection.  To supply these needed parameters to Kaltura while fulfilling a live captions task, you will have received a scheduleEventId along with a startDate and endDate (epoch timestamps).  Using that data to provision live caption services on the Vendor end, then you'll:
+1. Call the [scheduleEvent.updateLiveFeature()](https://developer.kaltura.com/api-docs/service/scheduleEvent/action/updateLiveFeature) to update the Kaltura event with the following fields so that we can send you the stream data, and retrieve the needed caption data:
+   - scheduleEventId: this is the scheduleEventId that you should have received in the entryVendorTask request
+   - featureName: for live captions, the featureName string should follow the format "LiveCaptionFeature-reach-<taskID>" where <taskID> is the id of the entryVendorTask you are fulfilling
+   - liveFeature: use the KalturaLiveCaptionFeature object
+   - captionToken: this should be a security token used when accessing the websocket that you will be outputting the caption data stream to
+   - captionUrl: this is the url (Vendor hosted) of the websocket that you will be outputting the caption data stream to
+   - mediaKey: this is the stream key/name for the RTMP(S) stream where we will send you a relay of the media stream
+   - mediaUrl: this is the RTMP(S) stream url (Vendor hosted) where we will send you a relay of the media stream
+2. At the time of the live session, Kaltura will relay the media stream to your provided mediaUrl/mediaKey for you to process the stream and output the caption feed back on the captionUrl/captionToken websocket that you provide.  Kaltura will handle ingesting the caption data and transforming to WebVTT format to inject into the player along with the HLS stream that viewers will consume.
+
 
 
 
