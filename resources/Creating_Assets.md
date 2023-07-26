@@ -76,7 +76,7 @@ Live caption services are implemented as Kaltura relaying an RTMP(S) stream to t
    - mediaKey: this is the stream key/name for the RTMP(S) stream where we will send you a relay of the media stream
    - mediaUrl: this is the RTMP(S) stream url (Vendor hosted) where we will send you a relay of the media stream
 2. At the time of the live session, Kaltura will relay the media stream to your provided mediaUrl/mediaKey for you to process the stream and output the caption feed back on the captionUrl/captionToken websocket that you provide.  Kaltura will handle ingesting the caption data and transforming to WebVTT format to inject into the player along with the HLS stream that viewers will consume.
-   - see [Websocket data example](/WebsocketCaptionDataExample.json) for an example of a JSON caption data payload from a websocket.
+   - see [Websocket data example](/resources/WebsocketCaptionDataExample.json) for an example of a JSON caption data payload from a websocket.
 
 
 
