@@ -1,6 +1,6 @@
-# References
+## References
 
-## General API documentation
+### General API documentation
 
 [1] How to Create a Kaltura Session - Kaltura VPaaS API Documentation
 
@@ -18,7 +18,7 @@
 
 [8] uploadToken - Kaltura VPaaS API Documentation
 
-## REACH jobs
+### REACH jobs
 
 [1] entryVendorTask.getJobs - Kaltura VPaaS API Documentation
 
@@ -30,7 +30,7 @@
 
 [5] baseEntry.getPlaybackContext - Kaltura VPaaS API Documentation
 
-## Captions and Translations
+### Captions and Translations
 
 [1] captionAsset.add - Kaltura VPaaS API Documentation
 
@@ -46,7 +46,7 @@
 
 [7] captionAsset.getUrl - Kaltura VPaaS API Documentation 
 
-## Dubbing and Standard Audio descriptions
+### Dubbing and Standard Audio descriptions
 
 [1] flavorAsset.add - Kaltura VPaaS API Documentation
 
