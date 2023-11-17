@@ -1,11 +1,34 @@
 # REACH-Vendor-Integration
+
+# Preface
+This preface contains the following topics:
+- About this Document
+- Audience
+- Abbreviations
+- Definition
+- References
+
+## About this document
 Guidance and examples on how REACH vendor partners can integrate with Kaltura.
 
-# Audience
+## Audience
 This guide is a reference for external Vendors who integrate with the Kaltura REACH framework.
 
-# Summary
-Kaltura REACH framework allows vendors to process Kaltura customer media and return enrichment assets, such as captions, transcripts, audio description, etc. Vendors get access to special APIs which allow them to periodically pull new REACH task requests (Each Task will contain metadata required for the vendor to process the request), process them, and update the customer's media with the resulting assets and/or metadata.
+## Abbreviations
+Please refer to the [abbreviations](https://github.com/Kaltura-SolutionsEngineering/REACH-Vendor-Integration/blob/main/references/abbreviations.md) page.
+
+## Definitions
+Please refer to the [definitions](https://github.com/Kaltura-SolutionsEngineering/REACH-Vendor-Integration/blob/main/references/definitions.md) page.
+
+## References
+Please refer to the [references](https://github.com/Kaltura-SolutionsEngineering/REACH-Vendor-Integration/blob/main/references/references.md) page.
+
+# Integration
+Kaltura REACH framework allows vendors to process Kaltura customer media and return enrichment assets, such as captions, transcripts, audio description, etc.
+
+Vendors gets access to special APIs ([entryVendorTask - Kaltura VPaaS API Documentation](https://developer.kaltura.com/api-docs/service/entryVendorTask)) which allows them to periodically pull new REACH tasks (each Task will contain metadata required for the vendor to process the request), process them and finally, update the customer's Kaltura account with the resulting assets and/or metadata.
+
+Vendors can choose to implement the integration using a Kaltura client library to add, list, update or delete objects from Kaltura. Kaltura supports a wide range of client libraries in different languages ([Native Client Libraries - Kaltura VPaaS API Documentation](https://developer.kaltura.com/api-docs/Client_Libraries)) or the vendor can choose to use the REST API ([Kaltura VPaaS API Overview - Kaltura VPaaS API Documentation](https://developer.kaltura.com/api-docs/Overview)).
 
 # Prerequisites
 * A Vendor partner account.
