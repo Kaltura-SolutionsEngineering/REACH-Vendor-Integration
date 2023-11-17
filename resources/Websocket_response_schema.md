@@ -1,6 +1,6 @@
 ### Websocket response schema
 Responses returned by the Streaming Speech Recognition services should have the following schema:
-`
+
 {
     "response": {
         "id": string (UUID),
@@ -37,4 +37,3 @@ Responses returned by the Streaming Speech Recognition services should have the 
         ]
     }
 }
-`
