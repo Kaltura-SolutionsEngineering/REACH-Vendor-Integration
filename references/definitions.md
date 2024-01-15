@@ -20,6 +20,14 @@ cURL is a computer software project providing a library (libcurl) and command-li
 
 A comma-separated values file is a text file that has a specific format which allows data to be saved in a table structured format.
 
+**Dictionary**
+
+A dictionary is a list of custom words or phrases to be added for each caption or transcription job. This helps when a specific word is not recognised during captioning and transcription. It could be that it's not in the vocabulary for that language, for example a company or person's name. Adding custom words or phrases can improve the likelihood they will be output.
+
+**Glossary**
+
+A translation glossary consists of one or more entries with a term in the source language (source text) and its corresponding translation (target text). A translation glossary helps you increase the accuracy of machine translation outputs by allowing users to specify how a specific term or phrase should be translated.
+
 **m3u8 manifest**
 
 In HLS world, everything begins with a manifest file :.m3u8 Manifest files reference video files (split in small chunks) and other assets like subtitles, audio, etc.
